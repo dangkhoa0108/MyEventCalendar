@@ -1,0 +1,49 @@
+﻿@model MyEventCalendar.Models.Calendar.WeekForMonthViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CalendarLayout.cshtml";
+}
+<style type="text/css">
+
+    .ellipsis {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+<div class="internship-calender-main" style="margin-top: 100px">
+    <div class="container">
+        <div class="content-calender" id="dvCalendar">
+            @{
+                Html.RenderPartial("_Calendar", Model);
+            }
+        </div>
+    </div>
+</div>
+@Html.ActionLink("List", "ShowEvent", "Event", new { area = "" }, new { @class = "navbar-brand" })
+
+<script type="text/javascript">
+        function loadCalendar(date, id) {
+            var month = 0;
+            var year = 0;
+            if (date != null) {
+                month = date.split("/")[0];
+                year = date.split("/")[1];
+            }
+            $.ajax({
+                url: '@Url.Action("LoadCalendarAjax","Calendar")',
+                data: {
+                    month: month,
+                    year: year,
+                    id: id
+                },
+                success: function(data) {
+                    $('#dvCalendar').html(data);
+                },
+                error: function(err) {
+                    console.log(err.Text);
+                }
+            });
+        }
+</script>
+

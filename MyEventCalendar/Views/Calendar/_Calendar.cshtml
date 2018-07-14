@@ -1,0 +1,88 @@
+﻿@using System.Globalization
+
+
+@{
+    var prevMonth = 0;
+    if (Model.PrevMonth.Split('/')[0] != "")
+    {
+        prevMonth = Convert.ToInt32(Model.PrevMonth.Split('/')[0]);
+    }
+
+    var nextMonth = 0;
+    if (Model.NextMonth.Split('/')[0] != "")
+    {
+        nextMonth = Convert.ToInt32(Model.NextMonth.Split('/')[0]);
+    }
+}
+<div class="month-year">
+    <div class="calender-month-wrap">
+        <ul>
+            <li class="calender-month">@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(prevMonth)</li>
+            <li class="calender-month calender-month-active">@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(Model.CurrentMonth)</li>
+            <li class="calender-month">@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(nextMonth)</li>
+        </ul>
+    </div>
+    <div class="calender-year">
+        <p>@Model.CurrentYear</p>
+    </div>
+</div>
+<div class="wrap-content-calendar-day-of-month">
+    <div class="content-calendar-day-of-month caledar-active">
+        <div class="day-of-week ">
+            <ul>
+                <li class="text-center">MON</li>
+                <li class="text-center">TUE</li>
+                <li class="text-center">WED</li>
+                <li class="text-center">THU</li>
+                <li class="text-center">FRI</li>
+                <li class="text-center">SAT</li>
+                <li class="text-center">SUN</li>
+            </ul>
+        </div>
+        <div class="calendar-day">
+            <ul>
+                @foreach (var week in Model.Weeks)
+                {
+                    foreach (var item in week)
+                    {
+                        if (item != null)
+                        {
+                            if (item.DtDay > 0 && item.IsDayInCurrentMonth)
+                            {
+                                <li class="day-in-month" title="@item.ShortDescription">
+                                    <span>@item.DtDay</span>
+                                    @if (item.HasEvent)
+                                    {
+                                        <img src="~/Bundle/img/Group 226.png" />
+                                        <p class="ellipsis">@item.ShortDescription</p>
+                                    }
+                                </li>
+                            }
+                            else
+                            {
+                                <li title="@item.ShortDescription">
+                                    <span>@item.DtDay</span>
+                                    @if (item.HasEvent)
+                                    {
+                                        <img src="~/Bundle/img/Group 226.png" />
+                                        <p class="ellipsis">@item.ShortDescription</p>
+                                    }
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li></li>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+<a onclick="loadCalendar('@Model.PrevMonth', '@ViewBag.Id')">
+    <img class="calendar-prev" src="~/Bundle/img/Subtraction 2.png" alt="">
+</a>
+<a onclick="loadCalendar('@Model.NextMonth', '@ViewBag.Id')">
+    <img class="calendar-next" src="~/Bundle/img/Subtraction 1.png" alt="">
+</a>

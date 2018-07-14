@@ -46,9 +46,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.2.0\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlXml" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -103,6 +113,30 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.2.0\lib\net47\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Configuration, Version=5.0.3.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.2.0\lib\net47\Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.2.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.2.0\lib\net47\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Interception, Version=5.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.2.0\lib\net47\Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Interception.Configuration, Version=5.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.2.0\lib\net47\Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mvc5, Version=1.3.0.0, Culture=neutral, PublicKeyToken=43da31bc42a85347, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc5.1.3.0\lib\net45\Unity.Mvc5.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RegistrationByConvention, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.2.0\lib\net47\Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ServiceLocation, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.2.0\lib\net47\Unity.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -148,13 +182,87 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807131306413_CreateDb.cs" />
+    <Compile Include="Migrations\201807131306413_CreateDb.Designer.cs">
+      <DependentUpon>201807131306413_CreateDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807131514464_AllowNull.cs" />
+    <Compile Include="Migrations\201807131514464_AllowNull.Designer.cs">
+      <DependentUpon>201807131514464_AllowNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807131746578_EditDateType.cs" />
+    <Compile Include="Migrations\201807131746578_EditDateType.Designer.cs">
+      <DependentUpon>201807131746578_EditDateType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807131752485_EditDateTypeDate.cs" />
+    <Compile Include="Migrations\201807131752485_EditDateTypeDate.Designer.cs">
+      <DependentUpon>201807131752485_EditDateTypeDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807131754192_EditDate.cs" />
+    <Compile Include="Migrations\201807131754192_EditDate.Designer.cs">
+      <DependentUpon>201807131754192_EditDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807141740289_UpdateModel.cs" />
+    <Compile Include="Migrations\201807141740289_UpdateModel.Designer.cs">
+      <DependentUpon>201807141740289_UpdateModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BootstrapModel.cs" />
+    <Compile Include="Models\Calendar\DayViewModel.cs" />
+    <Compile Include="Models\Calendar\WeekForMonthViewModel.cs" />
+    <Compile Include="Models\EventDbContext.cs" />
+    <Compile Include="Models\EventModel.cs" />
+    <Compile Include="Models\ModalFooter.cs" />
+    <Compile Include="Models\ModalHeader.cs" />
+    <Compile Include="Models\ModalSize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\EventRepository.cs" />
+    <Compile Include="Repository\IEventRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Bundle\Css\style-responsive.css" />
+    <Content Include="Bundle\Css\style.css" />
+    <Content Include="Bundle\Css\style.min.css" />
+    <Content Include="Bundle\img\bg-exel-with-us-mid.png" />
+    <Content Include="Bundle\img\bg-header-excel-with-us-2x.png" />
+    <Content Include="Bundle\img\Group 226.png" />
+    <Content Include="Bundle\img\img2.png" />
+    <Content Include="Bundle\img\LeadwithusBg.png" />
+    <Content Include="Bundle\img\Subtraction 1.png" />
+    <Content Include="Bundle\img\Subtraction 2.png" />
+    <Content Include="Bundle\Js\app.min.js" />
+    <Content Include="Bundle\Js\site.js" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Bundle\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Bundle\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Bundle\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Bundle\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Bundle\vendor\counterup\jquery.counterup.min.js" />
+    <Content Include="Bundle\vendor\counterup\jquery.waypoints.min.js" />
+    <Content Include="Bundle\vendor\jquery\jquery-3.3.1.min.js" />
+    <Content Include="Bundle\vendor\owlcarousel\assets\ajax-loader.gif" />
+    <Content Include="Bundle\vendor\owlcarousel\assets\owl.carousel.css" />
+    <Content Include="Bundle\vendor\owlcarousel\assets\owl.carousel.min.css" />
+    <Content Include="Bundle\vendor\owlcarousel\assets\owl.theme.default.css" />
+    <Content Include="Bundle\vendor\owlcarousel\assets\owl.theme.default.min.css" />
+    <Content Include="Bundle\vendor\owlcarousel\assets\owl.theme.green.css" />
+    <Content Include="Bundle\vendor\owlcarousel\assets\owl.theme.green.min.css" />
+    <Content Include="Bundle\vendor\owlcarousel\assets\owl.video.play.png" />
+    <Content Include="Bundle\vendor\owlcarousel\owl.carousel.js" />
+    <Content Include="Bundle\vendor\owlcarousel\owl.carousel.min.js" />
+    <Content Include="Bundle\vendor\wow\animate.min.css" />
+    <Content Include="Bundle\vendor\wow\wow.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -168,7 +276,29 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Bundle\font\Agenda-Light.otf" />
+    <Content Include="Bundle\font\Agenda-Regular.ttf" />
+    <Content Include="Bundle\font\AgendaBlack.ttf" />
+    <Content Include="Bundle\font\AgendaBold.ttf" />
+    <Content Include="Bundle\font\GravurCondensed-Black.otf" />
+    <Content Include="Bundle\font\GravurCondensed-Bold.otf" />
+    <Content Include="Bundle\font\GravurCondensed-Light.otf" />
+    <Content Include="Bundle\font\GravurCondensed-Regular.otf" />
+    <Content Include="Bundle\font\GravurCondensed-Thin.otf" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Bundle\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Bundle\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Bundle\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Bundle\vendor\bootstrap\js\bootstrap.js.map" />
+    <Content Include="Bundle\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Bundle\vendor\owlcarousel\LICENSE" />
+    <Content Include="Bundle\vendor\owlcarousel\README.md" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\event.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -190,13 +320,19 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Event\ShowEvent.cshtml" />
+    <Content Include="Views\Shared\_Modal.cshtml" />
+    <Content Include="Views\Shared\_ModalFooter.cshtml" />
+    <Content Include="Views\Shared\_ModalHeader.cshtml" />
+    <Content Include="Views\Event\_AddEditEvent.cshtml" />
+    <Content Include="Views\Event\_DeleteEvent.cshtml" />
+    <Content Include="Views\Shared\_CalendarLayout.cshtml" />
+    <Content Include="Views\Calendar\Index.cshtml" />
+    <Content Include="Views\Calendar\_Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Bundle\static image\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -210,6 +346,26 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201807131306413_CreateDb.resx">
+      <DependentUpon>201807131306413_CreateDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807131514464_AllowNull.resx">
+      <DependentUpon>201807131514464_AllowNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807131746578_EditDateType.resx">
+      <DependentUpon>201807131746578_EditDateType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807131752485_EditDateTypeDate.resx">
+      <DependentUpon>201807131752485_EditDateTypeDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807131754192_EditDate.resx">
+      <DependentUpon>201807131754192_EditDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807141740289_UpdateModel.resx">
+      <DependentUpon>201807141740289_UpdateModel.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
